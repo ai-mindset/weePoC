@@ -24,7 +24,7 @@ On macOS and Windows, you can launch the app with `julia --project app.jl [port 
 
 <a name="vgg">1</a>: "_Our main contribution is a thorough evaluation of networks of increasing depth using an architecture with very small (3×3) convolution filters, which shows that a significant improvement on the  prior-art configurations can  be  achieved by  pushing the  depth to  16–19 weight layers._"   
 
-![load photo|10%](./spacex.jpg)    
+![load photo|10%](./img/spacex.jpg)    
 After loading this ☝️ SpaceX launcher, here is what different pre-trained convolutional neural networks recognise  
 ```
 julia> img = load("spacex.jpg")  

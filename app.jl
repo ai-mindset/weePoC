@@ -1,4 +1,6 @@
 using Genie, Genie.Router, Genie.Renderer.Html, Genie.Requests
+using Images
+using ImageMagick
 using SQLite
 using Metalhead
 using Metalhead: classify
@@ -11,12 +13,19 @@ form = """
 """
 
 """
-    savetoDB(dbname)
+    savetoDB(dbname, chosen, result, postpld)
+Save to database
+Inputs: 
+dbname = database name e.g. db.sqlite
+chosen = name of chosen image
+result = classification label of chosen image
+postpld = postpayload() 
 """
-function savetoDB(dbname::String)
+function savetoDB(dbname::String,  chosen::String, result::String, postpld)
     db = SQLite.DB(dbname)
-    SQLite.execute(db, "CREATE TABLE IF NOT EXISTS classify_res(ID INTEGER, Request TEXT, 
-                                                       Response TEXT, Post BLOB)")
+    SQLite.execute(db, "CREATE TABLE IF NOT EXISTS results(Request BLOB, Image_Name TEXT, Image_Label TEXT)")
+    query = "INSERT INTO results VALUES(NULL,'" * chosen * "','" * result * "')"
+    SQLite.execute(db, query)
     @show SQLite.tables(db)
 end
 
@@ -27,7 +36,7 @@ Classifying images using VGG19
 Inputs:
 file = image filename
 Returns:
-string containing classification label 
+classification label string
 """
 function classification(file::String)
     vgg = VGG19()
@@ -46,7 +55,7 @@ port = port number
 Returns:
 chosen = filename of submited file
 """
-function fileupload(form::String, port::Integer)
+function fileupload(form::String, port::Integer, dbname::String)
     # GET
     route("/") do
         html(form)
@@ -59,15 +68,16 @@ function fileupload(form::String, port::Integer)
             stat(filename(filespayload(:yourfile))) # Returns a structure whose fields contain information about the file
             chosen = filename(filespayload(:yourfile)) # Extract file name string 
             result = classification(chosen)
-            savetoDB("db.sqlite")
+            savetoDB(dbname, chosen, result, postpayload())
         else
             "No file uploaded"
         end
     end
-
-    up(port, async = false) # Launch server. Async keeps connection alive 
+    
+    # Launch server, keep connection alive with async = false
+    up(port, async = false)  
 end
 
 
 port = parse(Int, ARGS[1]) # Port as input arg
-fileupload(form, port)
+fileupload(form, port, "db.sqlite")

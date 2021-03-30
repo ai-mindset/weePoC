@@ -7,10 +7,8 @@ I want to build a web-service that receives an image and returns the classificat
 Then, I'd like to save the requests and responses from this API to a database.  
 
 First, I'll use [Genie](https://www.genieframework.com/), a well known Julia web framework. And, I'll try to keep everything simple for now.  
-For the image recognition part I'll use [VGG19](https://arxiv.org/abs/1409.1556)[^1] as found in [Metalhead.jl](https://github.com/FluxML/Metalhead.jl), a set of Computer Vision models for [Flux.jl](https://github.com/FluxML/Flux.jl).  
+For the image recognition part I'll use [VGG19](https://arxiv.org/abs/1409.1556)<sup>[1](#vgg)</sup> as found in [Metalhead.jl](https://github.com/FluxML/Metalhead.jl), a set of Computer Vision models for [Flux.jl](https://github.com/FluxML/Flux.jl).  
 For the database part, I will use [SQLite.jl](https://github.com/JuliaDatabases/SQLite.jl), a Julia interface to the SQLite library.  
-
----
 
 ## Usage   
 
@@ -24,7 +22,8 @@ On macOS and Windows, you can launch the app with `julia --project app.jl [port 
 
 ---
 
-[^1]: "_Our main contribution is a thorough evaluation of networks of increasing depth using an architecture with very small (3×3) convolution filters, which shows that a significant improvement on the  prior-art configurations can  be  achieved by  pushing the  depth to  16–19 weight layers._"   
+<a name="vgg">1</a>: "_Our main contribution is a thorough evaluation of networks of increasing depth using an architecture with very small (3×3) convolution filters, which shows that a significant improvement on the  prior-art configurations can  be  achieved by  pushing the  depth to  16–19 weight layers._"   
+
 ![load photo|10%](./spacex.jpg)    
 After loading this ☝️ SpaceX launcher, here is what different pre-trained convolutional neural networks recognise  
 ```

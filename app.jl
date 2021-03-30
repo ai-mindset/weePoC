@@ -2,6 +2,7 @@ using Genie, Genie.Router, Genie.Renderer.Html, Genie.Requests
 using Images
 using ImageMagick
 using SQLite
+using DataFrames
 using Metalhead
 using Metalhead: classify
 
@@ -13,29 +14,28 @@ form = """
 """
 
 """
-    savetoDB(dbname, chosen, result, postpld)
+    savetoDB(dbname, imagename, result, request)
 Save to database
 Inputs: 
 dbname = database name e.g. db.sqlite
-chosen = name of chosen image
-result = classification label of chosen image
+imagename = name of selected image
+result = classification label of selected image
 postpld = postpayload() 
 """
-function savetoDB(dbname::String,  chosen::String, result::String, req)
+function savetoDB(dbname::String,  imagename::String, result::String, req::String)
     db = SQLite.DB(dbname)
-    # SQLite.execute(db, "CREATE TABLE IF NOT EXISTS results(Request TEXT, Image_Name TEXT, Image_Label TEXT)")
-    SQLite.execute(db, "CREATE TABLE results(Request_time DATE, Request TEXT, Image_Name TEXT, Image_Label TEXT)")
-    query = "INSERT INTO results VALUES(date('now'),'" * req * "','" * chosen * "','" * result * "')"
+    SQLite.execute(db, "CREATE TABLE IF NOT EXISTS results(Request_time TEXT, Request TEXT, Image_Name TEXT, Image_Label TEXT)")
+    query = "INSERT INTO results VALUES(date('now'),'" * req * "','" * imagename * "','" * result * "')"
     SQLite.execute(db, query)
-    @show SQLite.tables(db)
+    @show DBInterface.execute(db, "SELECT * FROM results") |> DataFrame
 end
 
 
 """
     classification(file)
-Classifying images using VGG19
+Classifying imagenames using VGG19
 Inputs:
-file = image filename
+file = imagename filename
 Returns:
 classification label string
 """
@@ -54,7 +54,7 @@ Input:
 form = a form that submits over `POST`
 port = port number
 Returns:
-chosen = filename of submited file
+imagename = filename of submited file
 """
 function fileupload(form::String, port::Integer, dbname::String)
     # GET
@@ -67,10 +67,9 @@ function fileupload(form::String, port::Integer, dbname::String)
         if infilespayload(:yourfile)
             write(filespayload(:yourfile)) # Write the canonical binary representation of a value to the given I/O stream or file.
             stat(filename(filespayload(:yourfile))) # Returns a structure whose fields contain information about the file
-            chosen = filename(filespayload(:yourfile)) # Extract file name string 
-            result = classification(chosen)
-            # savetoDB(dbname, chosen, result, rawpayload()) 
-            savetoDB(dbname, chosen, result, String(request()))
+            imagename = filename(filespayload(:yourfile)) # Extract file name string 
+            result = classification(imagename)
+            savetoDB(dbname, imagename, result, String(request()))
         else
             "No file uploaded"
         end

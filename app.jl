@@ -21,10 +21,11 @@ chosen = name of chosen image
 result = classification label of chosen image
 postpld = postpayload() 
 """
-function savetoDB(dbname::String,  chosen::String, result::String, postpld)
+function savetoDB(dbname::String,  chosen::String, result::String, req)
     db = SQLite.DB(dbname)
-    SQLite.execute(db, "CREATE TABLE IF NOT EXISTS results(Request BLOB, Image_Name TEXT, Image_Label TEXT)")
-    query = "INSERT INTO results VALUES(NULL,'" * chosen * "','" * result * "')"
+    # SQLite.execute(db, "CREATE TABLE IF NOT EXISTS results(Request TEXT, Image_Name TEXT, Image_Label TEXT)")
+    SQLite.execute(db, "CREATE TABLE results(Request_time DATE, Request TEXT, Image_Name TEXT, Image_Label TEXT)")
+    query = "INSERT INTO results VALUES(date('now'),'" * req * "','" * chosen * "','" * result * "')"
     SQLite.execute(db, query)
     @show SQLite.tables(db)
 end
@@ -68,7 +69,8 @@ function fileupload(form::String, port::Integer, dbname::String)
             stat(filename(filespayload(:yourfile))) # Returns a structure whose fields contain information about the file
             chosen = filename(filespayload(:yourfile)) # Extract file name string 
             result = classification(chosen)
-            savetoDB(dbname, chosen, result, postpayload())
+            # savetoDB(dbname, chosen, result, rawpayload()) 
+            savetoDB(dbname, chosen, result, String(request()))
         else
             "No file uploaded"
         end

@@ -7,8 +7,8 @@ I want to build a web-service that receives an image and returns the classificat
 Then, I'd like to save the requests and responses from this API to a database.  
 
 First, I'll use [Genie](https://www.genieframework.com/), a well known Julia web framework. And, I'll try to keep everything simple for now.  
-For the image recognition part I'll use [VGG19](https://arxiv.org/abs/1409.1556)<sup>[1](#vgg)</sup> as found in [Metalhead.jl](https://github.com/FluxML/Metalhead.jl), a set of Computer Vision models for [Flux.jl](https://github.com/FluxML/Flux.jl).  
-For the database part, I will use [SQLite.jl](https://github.com/JuliaDatabases/SQLite.jl), a Julia interface to the SQLite library.  
+For the image recognition part I'll use [VGG19](https://arxiv.org/abs/1409.1556)<sup>[1](#vgg)</sup> as found in [Metalhead.jl](https://github.com/FluxML/Metalhead.jl), a set of Computer Vision models for [Flux.jl](https://github.com/FluxML/Flux.jl). To load images, I'll use [ImageMagick.jl](https://github.com/JuliaIO/ImageMagick.jl).     
+For the database part, I will use [SQLite.jl](https://github.com/JuliaDatabases/SQLite.jl), a Julia interface to the SQLite library. Lastly, I'll use [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for printing tabular data.   
 
 ## Usage   
 

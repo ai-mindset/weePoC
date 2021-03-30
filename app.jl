@@ -1,5 +1,4 @@
 using Genie, Genie.Router, Genie.Renderer.Html, Genie.Requests
-using Images
 using ImageMagick
 using SQLite
 using DataFrames

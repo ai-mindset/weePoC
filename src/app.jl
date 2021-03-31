@@ -13,7 +13,8 @@ form = """
 """
 
 """
-    savetoDB(dbname, imagename, result, request)
+    savetoDB(dbname, imagename, result, req)
+
 Save to database
 Inputs: 
 dbname = database name e.g. db.sqlite
@@ -32,6 +33,7 @@ end
 
 """
     classification(file)
+
 Classifying imagenames using VGG19
 Inputs:
 file = imagename filename
@@ -46,12 +48,13 @@ end
 
 
 """
-    fileupload(form, port)
+    fileupload(form, port, dbname)
 
 Handling file uploads
 Input: 
 form = a form that submits over `POST`
 port = port number
+dbname = database name e.g. db.sqlite
 Returns:
 imagename = filename of submited file
 """

@@ -18,7 +18,11 @@ Run `$ ./launch.sh`. This will:
 1. Download [Julia 1.6.0](https://julialang.org/downloads/)  
 2. Decompress Julia on Linux or mount the Julia image on macOS (no action for Windows)  
 3. Launch app.jl, listen on port 8001 on Linux (no action for macOS or Windows)  
-On macOS and Windows, you can launch the app with `julia --project src/app.jl [port num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.   
+On macOS and Windows, you can launch the app with `julia --project src/app.jl [port_num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.   
+4. Navigate to `localhost:port_num/classify`  
+5. Select an image (examples are included in `/img`)  
+6. Submit your selection. The classifier will return a label, save it to a database and print a dataframe with the database contents on the browser and on the terminal window.  
+
 
 Why VGG instead of DenseNet<sup>[2](#dn)</sup> or ResNet<sup>[3](#rn)</sup>, both of which exist in Metalhead.jl?   
 ![load photo|10%](./img/spacex.jpg)    

@@ -60,7 +60,7 @@ imagename = filename of submited file
 """
 function fileupload(form::String, port::Integer, dbname::String)
     # GET
-    route("/") do
+    route("/classify") do
         html(form)
     end
 

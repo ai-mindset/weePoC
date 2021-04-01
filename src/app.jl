@@ -1,9 +1,10 @@
+using Pkg; Pkg.instantiate() # Install requirements
+print("Required packages installed\n")
 using Genie, Genie.Router, Genie.Renderer.Html, Genie.Requests
 using ImageMagick
 using SQLite
 using DataFrames
-using Metalhead
-using Metalhead: classify
+using Metalhead: VGG19, load, classify
 
 form = """
 <form action="/" method="POST" enctype="multipart/form-data">

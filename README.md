@@ -15,14 +15,21 @@ Libraries used:
 
 ## Usage   
 
+Clone repository `git clone https://github.com/inferential/weePoC`  
+Navigate into the directory `cd weePoC`  
 Run `$ ./launch.sh`. This will:  
 1. Download [Julia 1.6.0](https://julialang.org/downloads/)  
-2. Decompress Julia on Linux and WSL or mount the Julia image on macOS  
+2. Decompress Julia on Linux and WSL (or mount the Julia image on macOS)  
 3. Launch app.jl, listen on port 8001 on Linux or WSL (no action for macOS)  
-On macOS, you can launch the app with `julia --project src/app.jl [port_num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.   
-4. Navigate to `localhost:port_num/classify`  
-5. Select an image (examples are included in `/img`)  
-6. Submit your selection. The classifier will return a label, save it to a database and print a dataframe with the database contents on the browser and on the terminal window.  
+On macOS, you can launch the app with `julia --project src/app.jl [port_num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.  
+
+To use the app: 
+4. Navigate to `localhost:port_num/`  
+5. Press `Browse` to select an image (examples are included in `/img`)  
+6. Press `Submit` to submit your selection. The classifier will return a label, save it to a database and print a dataframe with the database contents on the browser and on the terminal window.  
+
+Should you wish to stop the server and restart it, press `Ctrl/Cmd-C` and run `./julia-1.6.0/bin/julia --project src/app.jl 8001` where 8001 is a randomly chosen port number.  
+
 
 
 Why VGG instead of DenseNet<sup>[2](#dn)</sup> or ResNet<sup>[3](#rn)</sup>, both of which exist in Metalhead.jl?   

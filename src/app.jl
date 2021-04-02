@@ -1,17 +1,19 @@
-using Pkg; Pkg.instantiate() # Install requirements
-print("Required packages installed\n")
+using Pkg 
+inst = Pkg.installed()
+if !haskey(inst, "Genie") || !haskey(inst, "SQLite") || !haskey(inst, "DataFrames") || !haskey(inst, "ImageMagick") || !haskey(inst, "Metalhead")
+    print("Downloading and precompiling libraries. Please wait... \n")
+    Pkg.instantiate() # Install requirements
+    print("Required packages installed\n")
+end
+
+
+print("Loading libraries... \n")
 using Genie, Genie.Router, Genie.Renderer.Html, Genie.Requests
-using ImageMagick
 using SQLite
 using DataFrames
+using ImageMagick
 using Metalhead: VGG19, load, classify
 
-form = """
-<form action="/" method="POST" enctype="multipart/form-data">
-<input type="file" name="yourfile" /><br/>
-<input type="submit" value="Submit" />
-</form>
-"""
 
 """
     savetoDB(dbname, imagename, result, req)
@@ -25,9 +27,10 @@ postpld = postpayload()
 """
 function savetoDB(dbname::String,  imagename::String, result::String, req::String)
     db = SQLite.DB(dbname)
-    SQLite.execute(db, "CREATE TABLE IF NOT EXISTS results(Request_time TEXT, Request TEXT, Image_Name TEXT, Image_Label TEXT)")
-    query = "INSERT INTO results VALUES(date('now'),'" * req * "','" * imagename * "','" * result * "')"
-    SQLite.execute(db, query)
+    create_table = "CREATE TABLE IF NOT EXISTS results(Request_time TEXT, Request TEXT, Image_Name TEXT, Image_Label TEXT)"
+    SQLite.execute(db, create_table)
+    insert = "INSERT INTO results VALUES(date('now'),'" * req * "','" * imagename * "','" * result * "')"
+    SQLite.execute(db, insert)
     @show DBInterface.execute(db, "SELECT * FROM results") |> DataFrame
 end
 
@@ -48,6 +51,13 @@ function classification(file::String)
 end
 
 
+form = """
+<form action="/" method="POST" enctype="multipart/form-data">
+<input type="file" name="yourfile" /><br/>
+<input type="submit" value="Submit" />
+</form>
+"""
+
 """
     fileupload(form, port, dbname)
 
@@ -61,7 +71,7 @@ imagename = filename of submited file
 """
 function fileupload(form::String, port::Integer, dbname::String)
     # GET
-    route("/classify") do
+    route("/") do
         html(form)
     end
 
@@ -84,4 +94,5 @@ end
 
 
 port = parse(Int, ARGS[1]) # Port as input arg
+print("Please wait, the app is starting... \n")
 fileupload(form, port, "db.sqlite")

@@ -24,9 +24,9 @@ Run `$ ./launch.sh`. This will:
 On macOS, you can launch the app with `julia --project src/app.jl [port_num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.  
 
 To use the app: 
-4. Navigate to `localhost:port_num/`  
-5. Press `Browse` to select an image (examples are included in `/img`)  
-6. Press `Submit` to submit your selection. The classifier will return a label, save it to a database and print a dataframe with the database contents on the browser and on the terminal window.  
+1. Navigate to `localhost:port_num/`  
+2. Press `Browse` to select an image (examples are included in `/img`)  
+3. Press `Submit` to submit your selection. The classifier will return a label, save it to a database and print a dataframe with the database contents on the browser and on the terminal window.  
 
 Should you wish to stop the server and restart it, press `Ctrl/Cmd-C` and run `./julia-1.6.0/bin/julia --project src/app.jl 8001` where 8001 is a randomly chosen port number.  
 

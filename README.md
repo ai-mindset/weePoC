@@ -8,17 +8,18 @@ Then, I'd like to save the requests and responses from this API to a database.
 
 Libraries used:  
 - [Genie](https://www.genieframework.com/), a well known Julia web framework. I'll try to keep everything simple for now.  
-- For the image recognition part I'll use VGG19<sup>[1](#vgg)</sup> as found in [Metalhead.jl](https://github.com/FluxML/Metalhead.jl), which is a set of Computer Vision models for [Flux.jl](https://github.com/FluxML/Flux.jl).   
+- [Metalhead.jl](https://github.com/FluxML/Metalhead.jl), a set of Computer Vision models for [Flux.jl](https://github.com/FluxML/Flux.jl). I'll use VGG19<sup>[1](#vgg)</sup>, since it has better accuracy.  
 - [ImageMagick.jl](https://github.com/JuliaIO/ImageMagick.jl) to load images.  
-- For the database part, I will use [SQLite.jl](https://github.com/JuliaDatabases/SQLite.jl), a Julia interface to the SQLite library. Lastly, I'll use [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for printing tabular data.   
+- [SQLite.jl](https://github.com/JuliaDatabases/SQLite.jl) for saving data into a database. 
+- [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for pretty printing tabular data.  
 
 ## Usage   
 
 Run `$ ./launch.sh`. This will:  
 1. Download [Julia 1.6.0](https://julialang.org/downloads/)  
-2. Decompress Julia on Linux or mount the Julia image on macOS (no action for Windows)  
-3. Launch app.jl, listen on port 8001 on Linux (no action for macOS or Windows)  
-On macOS and Windows, you can launch the app with `julia --project src/app.jl [port_num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.   
+2. Decompress Julia on Linux and WSL or mount the Julia image on macOS  
+3. Launch app.jl, listen on port 8001 on Linux or WSL (no action for macOS)  
+On macOS, you can launch the app with `julia --project src/app.jl [port_num]` at a [port number](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) of choice.   
 4. Navigate to `localhost:port_num/classify`  
 5. Select an image (examples are included in `/img`)  
 6. Submit your selection. The classifier will return a label, save it to a database and print a dataframe with the database contents on the browser and on the terminal window.  

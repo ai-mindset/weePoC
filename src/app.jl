@@ -8,8 +8,11 @@ end
 
 
 print("Loading libraries... \n")
-using Genie, Genie.Router, Genie.Renderer.Html, Genie.Requests
-using SQLite
+using Genie.AppServer: up
+using Genie.Router: route, POST
+using Genie.Renderer.Html: html
+using Genie.Requests: request, infilespayload, write, filespayload, filename 
+using SQLite: DB, execute, DBInterface
 using DataFrames
 using ImageMagick
 using Metalhead: VGG19, load, classify
@@ -26,11 +29,11 @@ result = classification label of selected image
 postpld = postpayload() 
 """
 function savetoDB(dbname::String,  imagename::String, result::String, req::String)
-    db = SQLite.DB(dbname)
+    db = DB(dbname)
     create_table = "CREATE TABLE IF NOT EXISTS results(Request_time TEXT, Request TEXT, Image_Name TEXT, Image_Label TEXT)"
-    SQLite.execute(db, create_table)
-    insert = "INSERT INTO results VALUES(date('now'),'" * req * "','" * imagename * "','" * result * "')"
-    SQLite.execute(db, insert)
+    execute(db, create_table)
+    ins = "INSERT INTO results VALUES(date('now'),'" * req * "','" * imagename * "','" * result * "')"
+    execute(db, ins)
     @show DBInterface.execute(db, "SELECT * FROM results") |> DataFrame
 end
 

@@ -12,6 +12,8 @@ if updtQ == "yes"
     Pkg.update()
 end
 
+Pkg.resolve() # Update the current manifest with eventual changes to the dependency graph from packages that are tracking a path
+
 print("Loading packages... \n")
 using Genie.AppServer: up
 using Genie.Router: route, POST

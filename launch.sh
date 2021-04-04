@@ -5,7 +5,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     UNCOMPRESSED="./julia-1.6.0"
     [[ -f ${FILE} && -d ${UNCOMPRESSED} ]] || [[ $(echo "Downloading Julia 1.6.0 for Linux" && curl -O https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.0-linux-x86_64.tar.gz && tar -xvzf julia-1.6.0-linux-x86_64.tar.gz) ]]
     echo "Please wait, launching Julia 1.6.0..."
-    ./julia-1.6.0/bin/julia --project src/app.jl 8001
+    $UNCOMPRESSED/bin/julia --project src/app.jl 8001
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Downloading Julia 1.6.0 for MacOS"
     curl -O https://julialang-s3.julialang.org/bin/mac/x64/1.6/julia-1.6.0-mac64.dmg
@@ -16,6 +16,6 @@ elif cat /proc/version | grep Microsoft; then
     UNCOMPRESSED="./julia-1.6.0"
     [[ -f ${FILE} && -d ${UNCOMPRESSED} ]] || [[ $(echo "Downloading Julia 1.6.0 for WSL" && curl -O https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.0-linux-x86_64.tar.gz && tar -xvzf julia-1.6.0-linux-x86_64.tar.gz) ]]
     echo "Please wait, launching Julia 1.6.0..."
-    ./julia-1.6.0/bin/julia --project src/app.jl 8001
+    $UNCOMPRESSED/bin/julia --project src/app.jl 8001
 fi
 

@@ -33,7 +33,7 @@ Inputs:
 dbname = database name e.g. db.sqlite
 imagename = name of selected image
 result = classification label of selected image
-postpld = postpayload() 
+req = postpayload() 
 """
 function savetoDB(dbname::String,  imagename::String, result::String, req::String)
     db = DB(dbname)

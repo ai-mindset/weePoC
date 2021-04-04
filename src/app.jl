@@ -1,13 +1,18 @@
 using Pkg 
 inst = Pkg.installed()
 if !haskey(inst, "Genie") || !haskey(inst, "SQLite") || !haskey(inst, "DataFrames") || !haskey(inst, "ImageMagick") || !haskey(inst, "Metalhead")
-    print("Downloading and precompiling libraries. Please wait... \n")
+    print("Downloading and precompiling packages. Please wait... \n")
     Pkg.instantiate() # Install requirements
-    print("Required packages installed\n")
+    print("Required packages installed \n")
 end
 
+print("Would you like to update this project's packages? [yes|no] \n")
+updtQ = readline()
+if updtQ == "yes"
+    Pkg.update()
+end
 
-print("Loading libraries... \n")
+print("Loading packages... \n")
 using Genie.AppServer: up
 using Genie.Router: route, POST
 using Genie.Renderer.Html: html

@@ -1,4 +1,5 @@
 using Pkg 
+Pkg.resolve() # Update the current manifest with eventual changes to the dependency graph from packages that are tracking a path
 inst = Pkg.installed()
 if !haskey(inst, "Genie") || !haskey(inst, "SQLite") || !haskey(inst, "DataFrames") || !haskey(inst, "ImageMagick") || !haskey(inst, "Metalhead")
     print("Downloading and precompiling packages. Please wait... \n")
@@ -12,7 +13,6 @@ if updtQ == "yes"
     Pkg.update()
 end
 
-Pkg.resolve() # Update the current manifest with eventual changes to the dependency graph from packages that are tracking a path
 
 print("Loading packages... \n")
 using Genie.AppServer: up

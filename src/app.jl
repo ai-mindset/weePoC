@@ -21,7 +21,7 @@ using Genie.Renderer.Html: html
 using Genie.Requests: request, infilespayload, write, filespayload, filename 
 using SQLite: DB, execute, DBInterface
 using DataFrames: DataFrame
-using ImageMagick: load
+using ImageMagick
 using Metalhead: VGG19, load, classify
 
 

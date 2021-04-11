@@ -20,8 +20,8 @@ using Genie.Router: route, POST
 using Genie.Renderer.Html: html
 using Genie.Requests: request, infilespayload, write, filespayload, filename 
 using SQLite: DB, execute, DBInterface
-using DataFrames
-using ImageMagick
+using DataFrames: DataFrame
+using ImageMagick: load
 using Metalhead: VGG19, load, classify
 
 

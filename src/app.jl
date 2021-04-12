@@ -89,7 +89,6 @@ function fileupload(form::String, port::Integer, dbname::String)
     route("/", method = POST) do
         if infilespayload(:yourfile)
             write(filespayload(:yourfile)) # Write the canonical binary representation of a value to the given I/O stream or file.
-            stat(filename(filespayload(:yourfile))) # Returns a structure whose fields contain information about the file
             imagename = filename(filespayload(:yourfile)) # Extract file name string 
             result = classification(imagename)
             savetoDB(dbname, imagename, result, String(request()))
